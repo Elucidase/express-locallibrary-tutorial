@@ -1,0 +1,29 @@
+extends layout
+
+block content
+
+  h1 #{title}: #{book.title}
+
+  if book_instances.length > 0
+    strong Delete the following book instances before attempting to delete this book.
+    h4 Book instances
+    dl
+      each book_instance in book_instances
+        dt #[a(href=book_instance.url) #{book_instance.id}]
+        dd
+          if book_instance.status == 'Available'
+            span.text-success #{book_instance.status}
+          else if book_instance .status == 'Maintenance'
+            span.text-danger #{book_instance.status}
+          else
+            span.text-warning #{book_instance.status}
+            
+  
+  else
+    p Do you really want to delete this Book?
+
+    form(method='POST' action='')
+      .formgroup
+        input#bookid.form-control(type='hidden' name='bookid' required='true' value=book.id)
+
+      button.btn.btn-primary(type='submit') Delete
